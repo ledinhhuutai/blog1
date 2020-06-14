@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Products\CreateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -10,7 +11,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index () {
-        return view('admin.products.index');
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
     }
 
     public function create () {
@@ -18,16 +20,44 @@ class ProductController extends Controller
         return view('admin.products.create', compact('cates'));
     }
 
-    public function saveCreate (Request $request) {
+    public function saveCreate (CreateRequest $request) {
         $product = new Product();
-        
+
         $data = $request->all();
 
-        $originalName = $request->image->getClientOriginalName();
-        $filename = str_replace(' ', '-', $originalName);
-        $filename = uniqid() . '-' . $filename;
-        $path = $request->file('image')->storeAs('products', $filename);
-        $data['image'] = 'images/'. $path;
+        if ($request->hasFile('image')) {
+            $originalName = $request->image->getClientOriginalName();
+            $filename = str_replace(' ', '-', $originalName);
+            $filename = uniqid() . '-' . $filename;
+            $path = $request->file('image')->storeAs('products', $filename);
+            $data['image'] = '/images/'. $path;
+        }
+
+        $product->fill($data);
+        $product->save();
+
+        return redirect()->route('products.list');
+    }
+
+    public function edit ($id) {
+        $product = Product::find($id);
+        $cates = Category::all();
+        return view('admin.products.edit', compact('product','cates'));
+    }
+
+    public function saveEdit (Request $request, $id) {
+        $product = Product::find($id);
+
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $originalName = $request->image->getClientOriginalName();
+            $filename = str_replace('','-', $originalName);
+            $filename = uniqid() . '-' . $filename;
+            $path = $request->image->storeAs('products', $filename);
+
+            $data['image'] = '/images/' . $path;
+        }
 
         $product->fill($data);
         $product->save();
