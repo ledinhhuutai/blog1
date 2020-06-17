@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Client\HomeController@index')->name('home');
 
+Route::get('/category/{id}', 'Client\CategoryController@index')->name('client.cate');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/test', function () {
+   return view('client.index');
+});

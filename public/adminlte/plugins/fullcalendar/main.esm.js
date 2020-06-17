@@ -1702,7 +1702,7 @@ function buildNativeFormattingFunc(standardDateProps, extendedSettings, context)
     };
 }
 function sanitizeSettings(standardDateProps, extendedSettings) {
-    // deal with a browser inconsistency where formatting the timezone
+    // deal with a browser inconsistency where formatting the client
     // requires that the hour/minute be present.
     if (standardDateProps.timeZoneName) {
         if (!standardDateProps.hour) {
@@ -1712,7 +1712,7 @@ function sanitizeSettings(standardDateProps, extendedSettings) {
             standardDateProps.minute = '2-digit';
         }
     }
-    // only support short timezone names
+    // only support short client names
     if (standardDateProps.timeZoneName === 'long') {
         standardDateProps.timeZoneName = 'short';
     }
@@ -1902,7 +1902,7 @@ function buildIsoString(marker, timeZoneOffset, stripZeroTime) {
     if (stripZeroTime) {
         s = s.replace('T00:00:00Z', '');
     }
-    if (s.length > 10) { // time part wasn't stripped, can add timezone info
+    if (s.length > 10) { // time part wasn't stripped, can add client info
         if (timeZoneOffset == null) {
             s = s.replace('Z', '');
         }
@@ -2654,7 +2654,7 @@ function rezoneDates(eventStore, oldDateEnv, newDateEnv) {
     var instances = mapHash(eventStore.instances, function (instance) {
         var def = defs[instance.defId];
         if (def.allDay || def.recurringDef) {
-            return instance; // isn't dependent on timezone
+            return instance; // isn't dependent on client
         }
         else {
             return __assign({}, instance, { range: {
@@ -4392,7 +4392,7 @@ function expandRanges(daysOfWeek, startTime, framingRange, dateEnv) {
     var endMarker = framingRange.end;
     var instanceStarts = [];
     while (dayMarker < endMarker) {
-        var instanceStart 
+        var instanceStart
         // if everyday, or this particular day-of-week
         = void 0;
         // if everyday, or this particular day-of-week
@@ -4780,7 +4780,7 @@ var DateEnv = /** @class */ (function () {
             return this.timestampToMarker(new Date().valueOf());
         }
         else {
-            // if we can't compute the current date val for a timezone,
+            // if we can't compute the current date val for a client,
             // better to give the current local date vals than UTC
             return arrayToUtcDate(dateToLocalArray(new Date()));
         }
@@ -7066,7 +7066,7 @@ var Calendar = /** @class */ (function () {
     // -----------------------------------------------------------------------------------------------------------------
     Calendar.prototype.getInitialDate = function () {
         var defaultDateInput = this.opt('defaultDate');
-        // compute the initial ambig-timezone date
+        // compute the initial ambig-client date
         if (defaultDateInput != null) {
             return this.dateEnv.createMarker(defaultDateInput);
         }
@@ -7182,7 +7182,7 @@ var Calendar = /** @class */ (function () {
     };
     // Date Selection / Event Selection / DayClick
     // -----------------------------------------------------------------------------------------------------------------
-    // this public method receives start/end dates in any format, with any timezone
+    // this public method receives start/end dates in any format, with any client
     // NOTE: args were changed from v3
     Calendar.prototype.select = function (dateOrObj, endDate) {
         var selectionInput;

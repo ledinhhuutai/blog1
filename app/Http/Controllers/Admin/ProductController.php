@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index () {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -63,5 +63,15 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->route('products.list');
+    }
+
+    public function delete ($id) {
+        $product = Product::find($id);
+//        $product->delete();
+    }
+
+    public function test () {
+        $products = Product::find(5);
+        dd($products->category->name);
     }
 }

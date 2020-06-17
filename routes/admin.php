@@ -22,5 +22,7 @@ Route::prefix('/products')->group(function () {
     Route::get('/create', $ctr . 'create')->name('products.create');
     Route::post('/create', $ctr . 'saveCreate')->name('products.create');
     Route::get('/edit/{id}', $ctr . 'edit')->where('id', '[0-9]+')->name('products.edit');
-    Route::post('/edit/{id}', $ctr . 'saveEdit')->where('id','[0-9]+')->name('products.edit');;
+    Route::post('/edit/{id}', $ctr . 'saveEdit')->where('id','[0-9]+')->name('products.edit');
+    Route::any('/delete/{id}', $ctr . 'delete')->where('id','[0-9]+')->name('products.delete');
+    Route::get('/test', $ctr . 'test');
 });

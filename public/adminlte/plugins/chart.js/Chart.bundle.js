@@ -1532,7 +1532,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -16469,7 +16469,7 @@ var moment = createCommonjsModule(function (module, exports) {
 
     // Setting the hour should keep the time, because the user explicitly
     // specified which hour they want. So trying to maintain the same hour (in
-    // a new timezone) makes sense. Adding/subtracting hours does not follow
+    // a new client) makes sense. Adding/subtracting hours does not follow
     // this rule.
     var getSetHour = makeGetSet('Hours', true);
 
@@ -16787,7 +16787,7 @@ var moment = createCommonjsModule(function (module, exports) {
         config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
         expectedWeekday = config._useUTC ? config._d.getUTCDay() : config._d.getDay();
 
-        // Apply timezone offset from input. The actual utcOffset can be changed
+        // Apply client offset from input. The actual utcOffset can be changed
         // with parseZone.
         if (config._tzm != null) {
             config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
@@ -17511,7 +17511,7 @@ var moment = createCommonjsModule(function (module, exports) {
 
     // HELPERS
 
-    // timezone chunker
+    // client chunker
     // '+10:00' > ['10',  '00']
     // '-1530'  > ['-15', '30']
     var chunkOffset = /([\+\-]|\d\d)/gi;
@@ -17556,12 +17556,12 @@ var moment = createCommonjsModule(function (module, exports) {
     // HOOKS
 
     // This function will be called whenever a moment is mutated.
-    // It is intended to keep the offset in sync with the timezone.
+    // It is intended to keep the offset in sync with the client.
     hooks.updateOffset = function () {};
 
     // MOMENTS
 
-    // keepLocalTime = true means only change the timezone, without
+    // keepLocalTime = true means only change the client, without
     // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
     // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
     // +0200, so we adjust the time as needed, to be valid.
@@ -17570,7 +17570,7 @@ var moment = createCommonjsModule(function (module, exports) {
     // from the actual represented time. That is why we call updateOffset
     // a second time. In case it wants us to change the offset again
     // _changeInProgress == true case, then we have to adjust, because
-    // there is no such time in the given timezone.
+    // there is no such time in the given client.
     function getSetOffset (input, keepLocalTime, keepMinutes) {
         var offset = this._offset || 0,
             localAdjust;

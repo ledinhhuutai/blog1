@@ -7,6 +7,7 @@
             <tr>
                 <th scope="col">Serial</th>
                 <th scope="col">Image</th>
+                <th scope="col">Category</th>
                 <th scope="col">Product name</th>
                 <th scope="col">Pirce</th>
                 <th scope="col">Action</th>
@@ -17,8 +18,12 @@
         @foreach($products as $p)
             <tr>
                 <th scope="row">{{ $count++ }}</th>
+
                 <td>
                     <img src="{{ $p->image }}" alt="" class="img-thumbnail" width="100px">
+                </td>
+                <td>
+                    {{ $p->category_id }}
                 </td>
                 <td>
                     {{ $p->name }}
@@ -30,7 +35,9 @@
                     <a href="{{ route('products.edit', ['id' => $p->id]) }}">
                         <button class="btn-sm btn-success">Edit</button>
                     </a>
-                    <button class="btn-sm btn-danger">Delete</button>
+                    <a href="{{ route('products.delete', ['id' => $p->id]) }}" id="delete" data-id="{{ $p->id }}" data-token="{{ csrf_token() }}">
+                        <button class="btn-sm btn-danger">Delete</button>
+                    </a>
                 </td>
             </tr>
         @endforeach
@@ -39,4 +46,8 @@
 @endsection
 @section('script')
     @include('admin.layouts.script')
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script>
+
+    </script>
 @endsection
