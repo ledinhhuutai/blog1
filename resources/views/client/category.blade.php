@@ -42,7 +42,7 @@
                                 <div class="popular-img">
                                     <img src="{{ $product->image }}" alt="">
                                     <div class="img-cap">
-                                        <span>Add to cart</span>
+                                        <a href="{{ route('addCart', ['id' => $product->id ]) }}"><span>Add to cart</span></a>
                                     </div>
                                     <div class="favorit-items">
                                         <span class="flaticon-heart"></span>

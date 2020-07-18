@@ -21,5 +21,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/test', function () {
-   return view('client.index');
+   return view('client.layouts.master');
+});
+
+Route::get('/cart', 'Client\CartController@cart')->name('cart');
+Route::get('/add-to-cart/{id}', 'Client\CartController@addToCard')->name('addCart')->middleware('auth');
+Route::delete('/delete-from-cart', 'Client\CartController@delete')->name('delete.item');
+Route::patch('/update-from-cart','Client\CartController@update')->name('update.item');
+Route::get('/delcart', function (){
+    session()->flush();
+});
+Route::get('cartd', function () {
+   $arr = session()->get('cart');
+   dd($arr);
 });

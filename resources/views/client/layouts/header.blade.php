@@ -15,7 +15,7 @@
                                 <li><a href="{{ route('home') }}">Home</a></li>
                                 <li><a href="#">Shop</a>
                                     <ul class="submenu">
-                                        @foreach($cates as $c)
+                                            @foreach($cates as $c)
                                         <li><a href="{{ route('client.cate', ['id' => $c->id]) }}">{{ $c->name }}</a></li>
                                         @endforeach
                                     </ul>
@@ -28,7 +28,7 @@
                     <div class="header-right">
                         <ul>
                             <li> <a href="login.html"><span class="flaticon-user"></span></a></li>
-                            <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+                            <li><a href="{{ route('cart') }}"><span class="flaticon-shopping-cart"></span></a> </li>
                         </ul>
                     </div>
                 </div>
